@@ -12,8 +12,8 @@ const routers = [
     {
         name: "Router1",
         host: "149.71.39.44",
-        user: "Tanzeel",
-        password: "@Tanzeel1122",
+        user: "admin",
+        password: "@hamad0345",
         port: 8728
     }
 ];
