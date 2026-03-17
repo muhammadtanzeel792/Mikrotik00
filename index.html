@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mikrotik Panel</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        select, input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .search { background: blue; }
+        .enable { background: green; }
+        .disable { background: red; }
+        .reset { background: orange; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+
+<h2>Mikrotik Panel</h2>
+
+<select id="router">
+    <option value="Router1">Router1</option>
+</select>
+
+<input type="text" id="voucher" placeholder="Enter Voucher">
+
+<br>
+
+<button class="search" onclick="send('search')">Search</button>
+<button class="enable" onclick="send('enable')">Enable</button>
+<button class="disable" onclick="send('disable')">Disable</button>
+<button class="reset" onclick="send('reset')">Reset</button>
+
+<p id="result"></p>
+
+</div>
+
+<script>
+function send(action){
+    let voucher = document.getElementById('voucher').value;
+    let router = document.getElementById('router').value;
+
+    if(!voucher){
+        alert("Enter voucher");
+        return;
+    }
+
+    let data = new URLSearchParams();
+    data.append("voucher", voucher);
+    data.append("router", router);
+    data.append("action", action);
+
+    fetch('/action', {
+        method: 'POST',
+        body: data
+    })
+    .then(res => res.text())
+    .then(res => {
+        document.getElementById('result').innerText = res;
+    });
+}
+</script>
+
+</body>
+</html>
